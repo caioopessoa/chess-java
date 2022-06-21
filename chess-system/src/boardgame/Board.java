@@ -25,14 +25,14 @@ public class Board {
 		}
 
 		
-		public Piece piece(int row, int column) {//recebe linha e coluna e retorna peça
+		public Piece piece(int row, int column) {//receives line and column and returns piece
 			if (!positionExists(row,column)) {//checking if the chosen position exists
 				throw new BoardException("Position not on the board");
 			}
 			return pieces[row][column]; 
 		}
 		
-		public Piece piece(Position position) {//sobrecarga para receber posiçao
+		public Piece piece(Position position) {//overcharge for receive position
 			if (!positionExists(position)) {//checking if the chosen position exists, before receiving
 				throw new BoardException("Position not on the board");
 			}
@@ -46,6 +46,19 @@ public class Board {
 			pieces[position.getRow()][position.getColumn()] = piece; //change a pieces position
 			piece.position = position;
 		
+		}
+		
+		public Piece removePiece(Position position) {
+			if (!positionExists(position)) {
+				throw new BoardException("Position not on the board");
+			}
+			if (piece(position) == null) {//if true, there is no piece on the position. if false, remove the piece from the board
+				return null; 
+			}
+			Piece aux = piece(position);//this variable is going to receive the piece in this position
+			aux.position = null;//removes the piece
+			pieces[position.getRow()][position.getColumn()] = null;//that is not anymore any piece on this position
+			return aux;//contains the removed piece
 		}
 		
 		private boolean positionExists(int row, int column) {//verify if the chosen position exists
