@@ -31,6 +31,7 @@ public class ChessMatch {//game rules
 		Position source = sourcePosition.toPosition();//converting the positions to the matrix positions
 		Position target = targetPosition.toPosition();//converting the positions to the matrix positions
 		validateSourcePosition(source);//checking if that was a piece on the position
+		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);//this variable is going to receive the value of makeMove operation, responsible for realizing the piece movement
 		return (ChessPiece)capturedPiece;
 	}
@@ -53,6 +54,11 @@ public class ChessMatch {//game rules
 		}
 	}
 	
+	private void validateTargetPosition(Position source, Position target) {
+		if (!board.piece(source).possibleMove(target)) {
+			throw new ChessException("The chosen piece can't move to target position");
+		}
+	}
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {//more intuitive way to place pieces 
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
